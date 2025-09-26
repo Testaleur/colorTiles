@@ -15,10 +15,10 @@ public class Tile extends JPanel {
     public Tile(int width, int height, Color color) {
       this.color = color;
 
-      setLayout(new GridBagLayout()); // center the label
+      setLayout(new GridBagLayout());
       jlabel = new JLabel("0");
       jlabel.setFont(new Font("Verdana", Font.BOLD, 20));
-      add(jlabel);
+      //add(jlabel);
     }
 
     @Override

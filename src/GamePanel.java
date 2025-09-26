@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
 
 	private Thread gameThread;
-	private List<Tile> tilesList = new ArrayList<>();
   private Color backgroundColor = new Color(0,0,0);
 	final int FPS;
   private int columnNumber = 6;
@@ -58,24 +58,55 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void createTiles() {
     setLayout(new GridLayout(rowNumber, columnNumber, 2, 2));
+    Random rand = new Random();
+	  
+    // initiate corners with random colors
+    Color colorTopLeft     = randomColor(rand);
+    Color colorBottomLeft  = randomColor(rand);
+    Color colorTopRight    = randomColor(rand);
+    Color colorBottomRight = randomColor(rand);
 
-    java.util.Random rand = new java.util.Random();
+    // fill first and last columns
+    List<Color> firstCol = getRowWithHarmonizedColors(colorTopLeft, colorBottomLeft, rowNumber);
+    List<Color> lastCol  = getRowWithHarmonizedColors(colorTopRight, colorBottomRight, rowNumber);
 
     for (int row = 0; row < rowNumber; row++) {
-      for (int col = 0; col < columnNumber; col++) {
-        Color randomColor = new Color(
-          rand.nextInt(256),
-          rand.nextInt(256),
-          rand.nextInt(256)
-        );
-
-        Tile tile = new Tile(0, 0, randomColor);
-
-        tilesList.add(tile);
+      List<Color> newRow = getRowWithHarmonizedColors(firstCol.get(row), lastCol.get(row), columnNumber);
+      for(int col = 0; col<columnNumber; col++){
+        Tile tile = new Tile(0, 0, newRow.get(col));
         this.add(tile);
-      }
+      }     
     }
   }
 
+  public Color randomColor(java.util.Random rand){
+    return new Color(
+      rand.nextInt(256),
+      rand.nextInt(256),
+      rand.nextInt(256)
+    );
+  }
+
+  public List<Color> getRowWithHarmonizedColors(Color firstColor, Color lastColor, int size) {
+    List<Color> row = new ArrayList<>(size);
+
+    int r1 = firstColor.getRed();
+    int g1 = firstColor.getGreen();
+    int b1 = firstColor.getBlue();
+
+    int r2 = lastColor.getRed();
+    int g2 = lastColor.getGreen();
+    int b2 = lastColor.getBlue();
+
+    for (int i = 0; i < size; i++) {
+      float t = (float) i / (size - 1);
+      int r = Math.round(r1 + t * (r2 - r1));
+      int g = Math.round(g1 + t * (g2 - g1));
+      int b = Math.round(b1 + t * (b2 - b1));
+      row.add(new Color(r, g, b));
+    }
+
+    return row;
+  }
 
 }
