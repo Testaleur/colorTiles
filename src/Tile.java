@@ -13,28 +13,28 @@ public class Tile extends JPanel {
     private JLabel jlabel;
 
     public Tile(int width, int height, Color color) {
-        this.color = color;
+      this.color = color;
 
-        setLayout(new GridBagLayout()); // center the label
-        jlabel = new JLabel("0");
-        jlabel.setFont(new Font("Verdana", Font.BOLD, 20));
-        add(jlabel);
+      setLayout(new GridBagLayout()); // center the label
+      jlabel = new JLabel("0");
+      jlabel.setFont(new Font("Verdana", Font.BOLD, 20));
+      add(jlabel);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+      super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(color);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+      Graphics2D g2d = (Graphics2D) g;
+      g2d.setColor(color);
+      g2d.fillRect(0, 0, getWidth(), getHeight());
 
-        g2d.setStroke(new BasicStroke(2));
-        g2d.setColor(Color.BLACK);
-        g2d.drawRect(0, 0, getWidth(), getHeight());
+      g2d.setStroke(new BasicStroke(2));
+      g2d.setColor(Color.BLACK);
+      g2d.drawRect(0, 0, getWidth(), getHeight());
     }
 
     public void setText(String text) {
-        jlabel.setText(text);
+      jlabel.setText(text);
     }
 }

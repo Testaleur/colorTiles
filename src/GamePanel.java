@@ -7,16 +7,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private Thread gameThread;
 	private List<Tile> tilesList = new ArrayList<>();
-	private int width;
-	private int height;
   private Color backgroundColor = new Color(0,0,0);
 	final int FPS;
   private int columnNumber = 6;
   private int rowNumber    = 8;
 
-	public GamePanel(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public GamePanel() {
 		this.FPS = 60;
 
 		// displayed window
@@ -58,32 +54,26 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		// for (Tile tile : tilesList) {
-		// 	tile.paintComponent(g2d);
-    // }
 	}
 
 	public void createTiles() {
-    // Set GridLayout: rows, columns, optional gaps between tiles
-    setLayout(new GridLayout(rowNumber, columnNumber, 2, 2)); // 2px gaps
+    setLayout(new GridLayout(rowNumber, columnNumber, 2, 2));
 
     java.util.Random rand = new java.util.Random();
 
     for (int row = 0; row < rowNumber; row++) {
-        for (int col = 0; col < columnNumber; col++) {
-            Color randomColor = new Color(
-                rand.nextInt(256),
-                rand.nextInt(256),
-                rand.nextInt(256)
-            );
+      for (int col = 0; col < columnNumber; col++) {
+        Color randomColor = new Color(
+          rand.nextInt(256),
+          rand.nextInt(256),
+          rand.nextInt(256)
+        );
 
-            // Tile constructor no longer needs xPos/yPos in grid layout
-            Tile tile = new Tile(0, 0, randomColor);
+        Tile tile = new Tile(0, 0, randomColor);
 
-            tilesList.add(tile);
-            this.add(tile); // add tile to panel
-        }
+        tilesList.add(tile);
+        this.add(tile);
+      }
     }
   }
 

@@ -6,7 +6,7 @@ public class App {
 		int width = 400;
 		int height = 600;
 
-		GamePanel gamePanel = new GamePanel(width, height);
+		GamePanel gamePanel = new GamePanel();
 
 		window.add(gamePanel);
 		window.setSize(width+18, height+32);
